@@ -1,6 +1,6 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 import unittest
-import endpoints
+import json
 
 app = Flask(__name__)
 
@@ -24,7 +24,7 @@ def get_users():
 
 @app.route('/users/<int:user_id>', methods=['GET']) # GET method to get a user by id
 def get_user(user_id):
-    users = next((user for user in users if user['id'] == user_id), None
+    user = next((user for user in users if user['id'] == user_id), None)
     if user is not None:
         return jsonify(user), 200
     else:
@@ -47,7 +47,7 @@ def delete_user(user_id):
         return '', 204
     else:
         return '', 404
-        
+
 class FlaskTestCase(unittest.TestCase):
 
     def setUp(self):
