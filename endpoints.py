@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import unittest
 import json
+import endpoints
 
 app = Flask(__name__)
 
@@ -10,6 +11,10 @@ def health():
 
 # mock database
 users = []
+
+def setUp(self):
+    self.app = app.test_client()
+    self.app.testing = True 
 
 @app.route('/users', methods=['POST']) # POST method to create a new user
 def create_user():
@@ -94,4 +99,3 @@ class FlaskTestCase(unittest.TestCase):
 
 if __name__ == '__main__':
     app.run()
-    unittest.main()
